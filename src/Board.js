@@ -79,29 +79,52 @@
     //
     // test if a specific row on this board contains a conflict
     hasRowConflictAt: function(rowIndex) {
-      return false; // fixme
+   
+      var sum = 0;
+      for(var i=0; i < (this.rows()[rowIndex]).length; i++){
+        sum += (this.rows()[rowIndex])[i];
+      }
+      if(sum > 1){
+        return true;
+      }
+      return false;
+      
     },
 
     // test if any rows on this board contain conflicts
     hasAnyRowConflicts: function() {
+      for( var i= 0; i < this.rows().length; i++){
+        if(this.hasRowConflictAt(i)){
+          return true
+        }
+      }
       return false; // fixme
     },
-
-
 
     // COLUMNS - run from top to bottom
     // --------------------------------------------------------------
     //
     // test if a specific column on this board contains a conflict
     hasColConflictAt: function(colIndex) {
+      var sum=0
+      for (var i=0 ; i< this.rows().length; i++){
+         sum+= (this.rows()[i][colIndex])
+      }
+      if(sum > 1){
+        return true;
+      }
       return false; // fixme
     },
 
     // test if any columns on this board contain conflicts
     hasAnyColConflicts: function() {
-      return false; // fixme
+      for( var i= 0; i < this.rows().length; i++){
+        if(this.hasColConflictAt(i)){
+          return true
+        }
+      }
+      return false;
     },
-
 
 
     // Major Diagonals - go from top-left to bottom-right
@@ -109,11 +132,32 @@
     //
     // test if a specific major diagonal on this board contains a conflict
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
+      var difference = majorDiagonalColumnIndexAtFirstRow;
+      var sum=0;
+
+      for (var i=0 ; i < this.rows().length ; i++ ){
+        for( var j=0 ; j< this.rows()[i].length; j++){
+          if ( i-j === difference ){
+            sum = sum + this.rows()[i][j];
+          }
+        }        
+      }
+      if (sum > 1){
+        return true
+      }
       return false; // fixme
     },
 
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
+      for (var i=0 ; i < this.rows().length ; i++ ){
+        for( var j=0 ; j< this.rows()[i].length; j++){
+          if(this.hasMajorDiagonalConflictAt(i-j)){
+            return true         
+           }
+        }
+      }
+      
       return false; // fixme
     },
 
@@ -124,13 +168,35 @@
     //
     // test if a specific minor diagonal on this board contains a conflict
     hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow) {
+      var difference = minorDiagonalColumnIndexAtFirstRow;
+      var sum=0;
+
+      for (var i=0 ; i < this.rows().length ; i++ ){
+        for( var j=0 ; j< this.rows()[i].length; j++){
+          if ( (j+i) === difference ){
+            sum = sum + this.rows()[i][j];
+          }
+        }        
+      }
+      if (sum > 1){
+        return true;
+      }
       return false; // fixme
     },
 
     // test if any minor diagonals on this board contain conflicts
     hasAnyMinorDiagonalConflicts: function() {
+      for (var i=0 ; i < this.rows().length ; i++ ){
+        for( var j=0 ; j< this.rows()[i].length; j++){
+          if(this.hasMinorDiagonalConflictAt(i+j)){
+            return true         
+           }
+        }
+      }
+      
       return false; // fixme
     }
+
 
     /*--------------------  End of Helper Functions  ---------------------*/
 
