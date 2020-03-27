@@ -15,20 +15,22 @@
 
 window.findNRooksSolution = function(n) {
   var solution = []; //fixme
-  
-  for (var i=0 ;  i<n ; i++){
-    var arr=[];
-    for(var j=0 ; j< n ; j++){
-      if(i===j){
-        arr.push(1);
+  var matrix = this.makeEmptyMatrix(n);
+  var board= new Board(matrix)
+
+ console.log("board = ",board)
+  for (var i = 0; i < n; i++) {
+    for (var j = 0; j < n; j++) {
+      matrix[i][j] = 1;
+      if(board.hasAnyRooksConflicts()){
+        matrix[i][j]= 0;
       }
-      arr.push(0);
-    }
-    solution.push(arr)
-  }
- 
-   console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solution));
+    }       
+  }   
+  solution=matrix;
+  console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solution));
   return solution;
+
 };
 
 // return the number of nxn chessboards that exist, 
@@ -51,20 +53,16 @@ window.countNRooksSolutions = function(n) {
 
 window.findNQueensSolution = function(n) {
   var solution = this.makeEmptyMatrix(n);
-  var board= new Board(solution)
-  
- // console.log(board)
- debugger
+  var board= new Board(solution)  
+// debugger
   for (let i = 0; i < n; i++) {
     for (let j = 0; j < n; j++) { 
       solution[i][j]= 1;
-      console.log(!!board.hasAnyQueenConflictsOn(2,3))
       if(board.hasAnyQueenConflictsOn(i,j)){
         solution[i][j]= 0;
       }      
     }       
   }  
- // console.log(matrix) 
   console.log('Single solution for ' + n + ' queens:', JSON.stringify(solution));
    return solution;
  };
