@@ -17,16 +17,14 @@ window.findNRooksSolution = function(n) {
   var solution = []; //fixme
   var matrix = this.makeEmptyMatrix(n);
   var board= new Board(matrix)
-
- console.log("board = ",board)
-  for (var i = 0; i < n; i++) {
+  for (var i = 0; i < n; i++) {    
+    board.togglePiece(i,j)
     for (var j = 0; j < n; j++) {
-      matrix[i][j] = 1;
       if(board.hasAnyRooksConflicts()){
-        matrix[i][j]= 0;
+        board.togglePiece(i,j)
       }
     }       
-  }   
+  } 
   solution=matrix;
   console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solution));
   return solution;
@@ -57,12 +55,15 @@ window.findNQueensSolution = function(n) {
 // debugger
   for (let i = 0; i < n; i++) {
     for (let j = 0; j < n; j++) { 
-      solution[i][j]= 1;
+      board.togglePiece(i,j)
       if(board.hasAnyQueenConflictsOn(i,j)){
-        solution[i][j]= 0;
-      }      
-    }       
-  }  
+        board.togglePiece(i,j)
+      }     
+    }
+    if(!solution[i].includes(1)){
+      this.findNQueensSolution(i)
+   } 
+  }    
   console.log('Single solution for ' + n + ' queens:', JSON.stringify(solution));
    return solution;
  };

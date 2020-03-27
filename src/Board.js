@@ -132,12 +132,13 @@
     //
     // test if a specific major diagonal on this board contains a conflict
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
+      //console.log(majorDiagonalColumnIndexAtFirstRow);
       var difference = majorDiagonalColumnIndexAtFirstRow;
       var sum=0;
 
       for (var i=0 ; i < this.rows().length ; i++ ){
         for( var j=0 ; j< this.rows()[i].length; j++){
-          if ( i-j === difference ){
+          if ( j-i === difference ){
             sum = sum + this.rows()[i][j];
           }
         }        
